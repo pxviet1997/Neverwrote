@@ -29,6 +29,7 @@ class NotebookList extends React.Component {
           notebook={currentNotebook}
           getNotes={this.props.getNotes}
           deleteNotebook={this.props.deleteNotebook}
+          saveNotebook={this.props.saveNotebook}
           reset={this.props.reset}
         />
       )

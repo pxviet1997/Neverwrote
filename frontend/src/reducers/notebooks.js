@@ -5,6 +5,7 @@ const api = require('../helpers/api');
 /* *** TODO: Put action constants here *** */
 const INSERT = 'notebook-frontend/notebooks/INSERT';
 const REMOVE = 'notebook-frontend/notebooks/REMOVE';
+const CHANGE = 'notebook-frontend/notebooks/CHANGE';
 
 const initialState = {
   data: [
@@ -26,12 +27,12 @@ function reducer(state, action) {
       const data = _.orderBy(unsortedNotebooks, 'createdAt','desc');
       return _.assign({}, state, { data } );
     }
-    // case CHANGE: {
-    //   const visibleNotebooks = _.clone(state.visibleNotebooks);
-    //   const changedIndex = _.findIndex(state.visibleNotebooks, {id: action.notebook.id })
-    //   visibleNotebooks[changedIndex] = action.notebook;
-    //   return _.assign({}, state, { visibleNotebooks });
-    // }
+    case CHANGE: {
+      const data = _.clone(state.data);
+      const changedIndex = _.findIndex(state.data, {id: action.notebook.id })
+      data[changedIndex] = action.notebook;
+      return _.assign({}, state, { data });
+    }
     case REMOVE: {
       const data = _.reject(state.data, {id: action.id});
       return _.assign({}, state, { data });
@@ -77,9 +78,23 @@ reducer.deleteNotebook = (notebookId) => {
    };
 };
 
-// reducer.changeNotebook = (notebook) => {
-//   return { type: CHANGE, notebook };
-// };
+// Attempts to update a post on the server and updates local post data if
+// successful
+reducer.saveNotebook = (editedNotebook, callback) => {
+  return (dispatch) => {
+    api.put('/notebooks/' + editedNotebook.id, editedNotebook).then((notebook) => {
+      // Saves local notebook.
+      dispatch(reducer.changeNotebook(notebook));
+      callback();
+    }).catch(() => {
+      alert('Failed to save notebook. Are all of the fields filled in correctly?');
+    });
+  };
+};
+
+reducer.changeNotebook = (notebook) => {
+  return { type: CHANGE, notebook };
+};
 
 // Export the action creators and reducer
 module.exports = reducer;
