@@ -4,9 +4,11 @@ const ReactRedux = require('react-redux');
 const createActionDispatchers = require('../helpers/createActionDispatchers');
 const notebooksActionCreators = require('../reducers/notebooks');
 const notesActionCreators = require('../reducers/notes');
+const statisticsActionCreators = require('../reducers/statistics');
 const Notebook = require('./Notebook');
 const NotebookNew = require('./NotebookNew');
 const NoteList = require('./NoteList');
+const Statistics = require('./Statistics');
 
 /*
   *** TODO: Build more functionality into the NotebookList component ***
@@ -15,6 +17,10 @@ const NoteList = require('./NoteList');
   you will need to build upon it in order to complete the assignment.
 */
 class NotebookList extends React.Component {
+  constructor(props) {
+    super(props);
+    props.loadStatistics();
+  }
   render() {
     const createNotebookListItem = (currentNotebook) => {
       return (
@@ -35,9 +41,12 @@ class NotebookList extends React.Component {
         );
       }
     };
+
+    // this.props.loadStatistic();
     
     return (
       <div>
+        <Statistics />
         <h2>Notebooks</h2>
         <NotebookNew createNotebook={this.props.createNotebook}/>
         {this.props.notebooks.data.map(createNotebookListItem)}
@@ -50,9 +59,10 @@ class NotebookList extends React.Component {
 const NotebookListContainer = ReactRedux.connect(
   state => ({
     notebooks: state.notebooks,
-    notes: state.notes
+    notes: state.notes,
+    statistics: state.statistics
   }),
-  createActionDispatchers(notebooksActionCreators, notesActionCreators)
+  createActionDispatchers(notebooksActionCreators, notesActionCreators, statisticsActionCreators)
 )(NotebookList);
 
 module.exports = NotebookListContainer;
