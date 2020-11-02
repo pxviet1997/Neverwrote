@@ -17,9 +17,11 @@ class NoteList extends React.Component {
     const createNoteListItem = (currentNote) => {
       return (
         <Note
+          // notebookId={this.props.notes.selectedNotebookId} 
           key={currentNote.id}
           note={currentNote}
           deleteNote={this.props.deleteNote}
+          saveNote={this.props.saveNote}
         />
       )
     }

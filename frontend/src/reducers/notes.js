@@ -7,6 +7,7 @@ const INSERT_1 = 'note-frontend/notes/INSERT_1';
 const INSERT_2 = 'note-frontend/notes/INSERT_2';
 const REMOVE = 'note-frontend/notes/REMOVE';
 const RESET = 'note-frontend/notes/RESET';
+const CHANGE = 'note-frontend/notes/CHANGE';
 
 const initialState = {
   data: [],
@@ -38,6 +39,12 @@ function reducer(state, action) {
     }
     case RESET: {
       return initialState;
+    }
+    case CHANGE: {
+      const data = _.clone(state.data);
+      const changedIndex = _.findIndex(state.data, {id: action.note.id })
+      data[changedIndex] = action.note;
+      return _.assign({}, state, { data });
     }
     default: 
       return state;
@@ -94,6 +101,22 @@ reducer.deleteNote = (noteId) => {
       alert('Failed to delete note.');
     });
    };
+};
+
+reducer.saveNote = (editedNote, callback) => {
+  return (dispatch) => {
+    api.put('/notes/' + editedNote.id, editedNote).then((note) => {
+      // Saves local notebook.
+      dispatch(reducer.changeNote(note));
+      callback();
+    }).catch(() => {
+      alert('Failed to save note. Are all of the fields filled in correctly?');
+    });
+  };
+};
+
+reducer.changeNote = (note) => {
+  return { type: CHANGE, note };
 };
 
 // Export the action creators and reducer

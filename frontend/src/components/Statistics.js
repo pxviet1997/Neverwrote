@@ -14,6 +14,7 @@ class Statistics extends React.Component {
   render() {
     return (
       <div>
+        <h2>Statistics</h2>
         <button className="refresh" onClick={ this.props.loadStatistics }>
          Refresh
         </button>
