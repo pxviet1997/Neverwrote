@@ -13,6 +13,10 @@ const Note = require('./Note');
   you will need to build upon it in order to complete the assignment.
 */
 class NoteList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { inputValue: '' };
+  }
   render() {
     const createNoteListItem = (currentNote) => {
       return (
@@ -25,16 +29,45 @@ class NoteList extends React.Component {
         />
       )
     }
+
+    const onNoteFilterChange = (event) => {
+      this.setState({
+        inputValue: event.target.value
+      });
+    };
+
+    const filterNotes = this.props.notes.data.filter(note => {
+      return note.title.toLowerCase().includes(this.state.inputValue.toLowerCase())
+              || note.content.toLowerCase().includes(this.state.inputValue.toLowerCase());
+    });
+
+    const displayNotes = () => {
+      if (this.state.inputValue === '') {
+        return this.props.notes.data.map(createNoteListItem);
+      }
+      else {
+        return filterNotes.map(createNoteListItem);
+      }
+    }
     
     return (
       <div>
         <h2>Notes</h2>
+        <div>
+          <label htmlFor="search">Search for note</label>
+          <input className="form-control" 
+              placeholder="Search by title or content..."
+              value={this.state.inputValue}
+              onChange={onNoteFilterChange}
+          />
+        </div>
         <NoteNew 
           notebookId={this.props.notes.selectedNotebookId} 
           createNote={this.props.createNote}
         />
         
-        {this.props.notes.data.map(createNoteListItem)}
+        {/* {this.props.notes.data.map(createNoteListItem)} */}
+        {displayNotes()}
         
       </div>
     );

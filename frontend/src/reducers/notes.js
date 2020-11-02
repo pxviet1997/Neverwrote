@@ -76,7 +76,6 @@ reducer.getNotes = (notebookId) => {
 reducer.createNote = (newNote, callback) => {
   return (dispatch) => {
     api.post('/notes', newNote).then((note) => {
-      // This post is one that the store returns us! It has post id incremented to the next available id
       dispatch(reducer.insertNotes2([note]));
       callback();
     }).catch(() => {

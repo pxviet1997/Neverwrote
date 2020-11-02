@@ -6,7 +6,10 @@ const NoteEdit = require('./NoteEdit');
 class Note extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editing: false };
+    this.state = { 
+      editing: false,
+      showContent: false
+     };
   }
 
   render() {
@@ -41,6 +44,14 @@ class Note extends React.Component {
       this.props.deleteNote(this.props.note.id);
     }
 
+    const toggleDisplayContent = () => {
+      this.setState({ showContent: !this.state.showContent });
+    }
+
+    const displayContent = () => {
+      return this.state.showContent == true ? '--- ' + this.props.note.content : '';
+    }
+
     return (
       <div className="note-title">
         <a role="button" title="Delete post"
@@ -55,7 +66,13 @@ class Note extends React.Component {
         >
           <span className="fa fa-edit"/>
         </a>
-        {this.props.note.title}: {this.props.note.content}
+        <a role="button" title="Show content"
+            style={{ paddingRight: '8px' }}
+            onClick={ toggleDisplayContent }
+        >
+          {this.props.note.title}
+        </a>
+        {displayContent()}
       </div>
     );
   }
