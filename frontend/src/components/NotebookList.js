@@ -36,7 +36,9 @@ class NotebookList extends React.Component {
           notebook={currentNotebook}
           getNotes={this.props.getNotes}
           deleteNotebook={this.props.deleteNotebook}
+          deleteSearchedNotebook={this.props.deleteSearchedNotebook}
           saveNotebook={this.props.saveNotebook}
+          saveSearchedNotebook={this.props.saveSearchedNotebook}
           reset={this.props.reset}
         />
       )
@@ -48,7 +50,10 @@ class NotebookList extends React.Component {
           key={currentNote.id}
           note={currentNote}
           deleteNote={this.props.deleteNote}
+          deleteSearchedNote={this.props.deleteSearchedNote}
           saveNote={this.props.saveNote}
+          saveSearchedNote={this.props.saveSearchedNote}
+
         />
       )
     }
@@ -56,7 +61,12 @@ class NotebookList extends React.Component {
     const displayNotes = () => {
       if (this.props.notes.selectedNotebookId !== -1) {
         return (
-          <NoteList />
+          <NoteList 
+            notes={this.props.notes}
+            createNote={this.props.createNote}
+            deleteNote={this.props.deleteNote}
+            saveNote={this.props.saveNote}
+          />
         );
       }
     };
@@ -71,14 +81,14 @@ class NotebookList extends React.Component {
       
     };
 
-
     const displayResult = () => {
       const notebooks = this.props.searchUniversal.notebooks.map(createNotebookListItem);
       const notes = this.props.searchUniversal.notes.map(createNoteListItem);
-      // console.log(notebooks);
+      const itemList = notebooks.concat(notes);
+      console.log(itemList);
       
       return  this.state.inputValue === '' ? this.props.notebooks.data.map(createNotebookListItem) : 
-                                            _.concat(notebooks, notes);
+                                            itemList;
                                               // notebooks;
                                             // return this.props.notebooks.data.map(createNotebookListItem);
     }

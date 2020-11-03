@@ -1,8 +1,5 @@
 const React = require('react');
-const ReactRedux = require('react-redux');
 
-const createActionDispatchers = require('../helpers/createActionDispatchers');
-const notesActionCreators = require('../reducers/notes');
 const NoteNew = require('./NoteNew');
 const Note = require('./Note');
 
@@ -21,7 +18,6 @@ class NoteList extends React.Component {
     const createNoteListItem = (currentNote) => {
       return (
         <Note
-          // notebookId={this.props.notes.selectedNotebookId} 
           key={currentNote.id}
           note={currentNote}
           deleteNote={this.props.deleteNote}
@@ -70,11 +66,4 @@ class NoteList extends React.Component {
   }
 }
 
-const NoteListContainer = ReactRedux.connect(
-  state => ({
-    notes: state.notes
-  }),
-  createActionDispatchers(notesActionCreators)
-)(NoteList);
-
-module.exports = NoteListContainer;
+module.exports = NoteList;

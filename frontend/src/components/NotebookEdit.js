@@ -24,6 +24,7 @@ class NotebookEdit extends React.Component {
         title: this.state.title
       });
       this.props.onSave(editedNotebook);
+      
     };
 
     const onTitleChange = (event) => {

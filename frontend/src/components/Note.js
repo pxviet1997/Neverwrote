@@ -25,6 +25,7 @@ class Note extends React.Component {
       this.props.saveNote(editedNote, (err) => {
         if(!err) closeEdit();
       });
+      this.props.saveSearchedNote(editedNote);
     };
 
     if(this.state.editing) {
@@ -42,6 +43,7 @@ class Note extends React.Component {
 
     const deleteThisNote = () => {
       this.props.deleteNote(this.props.note.id);
+      this.props.deleteSearchedNote(this.props.note.id);
     }
 
     const toggleDisplayContent = () => {

@@ -21,10 +21,10 @@ class Notebook extends React.Component {
       this.props.saveNotebook(editedNotebook, (err) => {
         if(!err) closeEdit();
       });
+      this.props.saveSearchedNotebook(editedNotebook);
     };
 
     if(this.state.editing) {
-      // Render component for editing the post
       return (
         <NotebookEdit
           notebook={this.props.notebook}
@@ -36,6 +36,7 @@ class Notebook extends React.Component {
 
     const deleteThisNotebook = () => {
       this.props.deleteNotebook(this.props.notebook.id);
+      this.props.deleteSearchedNotebook(this.props.notebook.id);
       this.props.reset();
     }
 
