@@ -10,5 +10,6 @@ module.exports = Redux.combineReducers({
   /* *** TODO: Put any other reducers in here *** */
   // eg. `notes: require('./notes')` if you have a reducer in reducers/notes.js
   notes: require('./notes'),
-  statistics: require('./statistics')
+  statistics: require('./statistics'),
+  searchUniversal: require('./searchUniversal')
 });

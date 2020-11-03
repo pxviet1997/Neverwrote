@@ -24,11 +24,13 @@ class NoteEdit extends React.Component {
     const submitAndStopEditing = (event) => {
       event.preventDefault();
       // Creates a new post object and saves it.
+      console.log('this.props.note : ' + this.props.note);
       const editedNote = _.assign({}, this.props.note, {
         title: this.state.title,
         content: this.state.content,
         notebookId: this.state.notebookId
       });
+      console.log('editedNote : ' + editedNote.title);
       this.props.onSave(editedNote);
     };
 
@@ -55,10 +57,10 @@ class NoteEdit extends React.Component {
             value={ this.state.content }
             onChange={onContentChange}
           />
-          <button type="button" class="btn btn-success" onClick={submitAndStopEditing}>
+          <button type="button" className="btn btn-success" onClick={submitAndStopEditing}>
             <i className="fa fa-check"/>
           </button>
-          <button type="button" class="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
+          <button type="button" className="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
         </div>
       </div>
     );

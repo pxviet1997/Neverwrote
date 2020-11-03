@@ -2,41 +2,49 @@ const express = require('express');
 const _ = require('lodash');
 const models = require('../models');
 const Promise = require('sequelize').Promise;
-// const Op = require('sequelize').Op;
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/:searchedWord', (req, res) => {
   const notebooks = models.Notebook.findAll({
     where: {
-      title: req.body.title
+      $or: [
+        {
+          title : {
+            $like: '%' + req.params.searchedWord + '%'
+          }
+        }
+      ]
     }
   });
 
-  // const notes = models.Note.findAll({
-  //   where: {
-  //     [Op.or] : [
-  //       { title: 'Car' },
-  //       { content: 'Toy' }
-  //     ]
-  //   }
-  // });
-  models.Note.findAll({
+  const notes = models.Note.findAll({
     where: {
-      // [Op.or] : [{ title: 'Car' }, { content: 'Toy' }]
-      [require('sequelize').Op.or]: [{ a: 5 }, { b: 6 }], 
+      $or: [
+        {
+          title : {
+            $like: '%' + req.params.searchedWord + '%'
+          }
+        },
+        {
+          content: {
+            $like: '%' + req.params.searchedWord + '%'
+          }
+        }
+      ]
     }
-  })
-  // .then(data => {
-  //   res.json({data})
-  // });
+  });
 
-  // Promise.all([notebooks, notes])
-  //   .then(data => {
-  //     let notebooks = data[0];
-  //     let notes = data[1];
-  //     res.json({notebooks, notes});
-  //   });
+  console.log('notes : ' + notes);
+
+  // Promise.all([notebooks, notesTitle, notesContent])
+  Promise.all([notebooks, notes])
+  .then(data => {
+      let notebooks = data[0];
+      // let notes = _.concat(data[1], data[2]);
+      let notes = data[1];
+      res.json({notebooks, notes});
+    });
 
 });
 

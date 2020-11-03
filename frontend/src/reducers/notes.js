@@ -74,6 +74,7 @@ reducer.getNotes = (notebookId) => {
 };
 
 reducer.createNote = (newNote, callback) => {
+  // console.log('new note : ' + newNote);
   return (dispatch) => {
     api.post('/notes', newNote).then((note) => {
       dispatch(reducer.insertNotes2([note]));

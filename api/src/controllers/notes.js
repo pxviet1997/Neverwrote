@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
 
 // POST /notes - Creates a new note using the posted data. The notebookId attribute shall specify which notebook it belongs to. Returns the new note.
 router.post('/', (req, res) => {
+  // console.log(req.body);
   models.Note.create(noteFilter(req.body))
     .then(note => res.json(note))
     .catch(err => res.status(500).json({ error: err.message }));
