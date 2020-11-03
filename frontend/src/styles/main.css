@@ -1,1 +1,5 @@
 /* *** TODO: Put your CSS styles here to make the web application look nice *** */
+.float-child {
+  width: 50%;
+  float: left;
+}  

@@ -38,16 +38,12 @@ class NoteList extends React.Component {
 
     const filterNotes = this.props.notes.data.filter(note => {
       return note.title.toLowerCase().includes(this.state.inputValue.toLowerCase())
-              || note.content.toLowerCase().includes(this.state.inputValue.toLowerCase());
+          || note.content.toLowerCase().includes(this.state.inputValue.toLowerCase());
     });
 
     const displayNotes = () => {
-      if (this.state.inputValue === '') {
-        return this.props.notes.data.map(createNoteListItem);
-      }
-      else {
-        return filterNotes.map(createNoteListItem);
-      }
+      return this.state.inputValue === '' ? this.props.notes.data.map(createNoteListItem) : 
+                                            filterNotes.map(createNoteListItem);
     }
     
     return (

@@ -55,10 +55,10 @@ class NoteEdit extends React.Component {
             value={ this.state.content }
             onChange={onContentChange}
           />
-          <button className="btn btn-success" onClick={submitAndStopEditing}>
+          <button type="button" class="btn btn-success" onClick={submitAndStopEditing}>
             <i className="fa fa-check"/>
           </button>
-          <button className="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
+          <button type="button" class="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
         </div>
       </div>
     );

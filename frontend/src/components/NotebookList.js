@@ -46,12 +46,24 @@ class NotebookList extends React.Component {
     // this.props.loadStatistic();
     
     return (
-      <div>
+      <div className="float-container">
         <Statistics />
-        <h2>Notebooks</h2>
-        <NotebookNew createNotebook={this.props.createNotebook}/>
-        {this.props.notebooks.data.map(createNotebookListItem)}
-        {displayNotes()}
+        <div className="float-child">
+          <h2>Notebooks</h2>
+          {/* <div>
+            <label htmlFor="search">Search for note</label>
+            <input className="form-control" 
+                placeholder="Search by title or content..."
+                value={this.state.inputValue}
+                onChange={onNoteFilterChange}
+            />
+          </div> */}
+          <NotebookNew createNotebook={this.props.createNotebook}/>
+          {this.props.notebooks.data.map(createNotebookListItem)}
+        </div>
+        <div className="float-child">
+          {displayNotes()}
+        </div>
       </div>
     );
   }
