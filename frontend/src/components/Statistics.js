@@ -1,8 +1,4 @@
 const React = require('react');
-const ReactRedux = require('react-redux');
-
-const createActionDispatchers = require('../helpers/createActionDispatchers');
-const statisticsActionCreators = require('../reducers/statistics');
 
 /*
   *** TODO: Build more functionality into the NotebookList component ***
@@ -10,28 +6,35 @@ const statisticsActionCreators = require('../reducers/statistics');
   as a plain list containing their titles. This code is just a starting point,
   you will need to build upon it in order to complete the assignment.
 */
-class Statistics extends React.Component {
-  render() {
-    return (
-      <div>
-        <h2>Statistics</h2>
-        <button className="refresh" onClick={ this.props.loadStatistics }>
-         Refresh
-        </button>
-        <div>noteCount: {this.props.statistics.noteCount}</div>
-        <div>notebookCount: {this.props.statistics.notebookCount}</div>
-        <div>oldestNotebook: {this.props.statistics.oldestNotebook}</div>
-        <div>recentlyUpdatedNote: {this.props.statistics.recentlyUpdatedNote}</div>
-      </div>
-    );
-  }
+const Statistics = (props) => {
+  return (
+    <div>
+      <h2>Statistics</h2>
+      <button className="refresh" onClick={ props.loadStatistics }>
+        Refresh
+      </button>
+      <table className="statistic-table">
+        <tbody>
+          <tr>
+            <th>noteCount</th>
+            <td>{props.noteCount}</td>
+          </tr>
+          <tr>
+            <th>notebookCount</th>
+            <td>{props.notebookCount}</td>
+          </tr>
+          <tr>
+            <th>oldestNotebook</th>
+            <td>{props.oldestNotebook}</td>
+          </tr>
+          <tr>
+            <th>recentlyUpdatedNote</th>
+            <td>{props.recentlyUpdatedNote}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );  
 }
 
-const StatisticsContainer = ReactRedux.connect(
-  state => ({
-    statistics: state.statistics
-  }),
-  createActionDispatchers(statisticsActionCreators)
-)(Statistics);
-
-module.exports = StatisticsContainer;
+module.exports = Statistics;

@@ -85,7 +85,13 @@ class NotebookList extends React.Component {
     
     return (
       <div className="float-container">
-        <Statistics />
+        <Statistics 
+          noteCount={this.props.statistics.noteCount}
+          notebookCount={this.props.statistics.notebookCount}
+          oldestNotebook={this.props.statistics.oldestNotebook}
+          recentlyUpdatedNote={this.props.statistics.recentlyUpdatedNote}
+          loadStatistics={this.props.loadStatistics}
+        />
         <div className="float-child">
           <h2>Notebooks</h2>
 
