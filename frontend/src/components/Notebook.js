@@ -1,6 +1,7 @@
 const React = require('react');
 
 const NotebookEdit = require('./NotebookEdit');
+const NotebookView = require('./NotebookView');
 
 class Notebook extends React.Component {
   constructor(props) {
@@ -45,25 +46,12 @@ class Notebook extends React.Component {
     }
 
     return (
-
-      <div className="notebook-title">
-          <a role="button" title="Delete notebookb"
-            style={{ paddingRight: '8px' }}
-            onClick={ deleteThisNotebook }
-          >
-            <span className="fa fa-remove"/>
-          </a>
-          <a role="button" title="Edit notebook"
-            style={{ paddingRight: '8px' }}
-            onClick={ openEdit }
-          >
-            <span className="fa fa-edit"/>
-          </a>
-          <a role="button" onClick={notebookClicked}>
-            {this.props.notebook.title}
-          </a>
-      </div>
-      
+      <NotebookView 
+        deleteThisNotebook={deleteThisNotebook}
+        openEdit={openEdit}
+        notebookClicked={notebookClicked}
+        title={this.props.notebook.title}
+      />
     );
   }
 }

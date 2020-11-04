@@ -2,6 +2,7 @@ const React = require('react');
 
 const MarkdownEditor = require('./MarkdownEditor');
 const NoteEdit = require('./NoteEdit');
+const NoteView = require('./NoteView');
 
 class Note extends React.Component {
   constructor(props) {
@@ -55,26 +56,14 @@ class Note extends React.Component {
     }
 
     return (
-      <div className="note-title">
-        <a role="button" title="Delete post"
-            style={{ paddingRight: '8px' }}
-            onClick={ deleteThisNote }
-        >
-          <span className="fa fa-remove"/>
-        </a>
-        <a role="button" title="Edit note"
-            style={{ paddingRight: '8px' }}
-            onClick={ openEdit }
-        >
-          <span className="fa fa-edit"/>
-        </a>
-        <a role="button" title="Show content"
-            style={{ paddingRight: '8px' }}
-            onClick={ toggleDisplayContent }
-        >
-          {this.props.note.title}
-        </a>
-        {displayContent()}
+      <div>
+        <NoteView
+          deleteThisNote={deleteThisNote}
+          openEdit={openEdit}
+          toggleDisplayContent={toggleDisplayContent}
+          displayContent={displayContent}
+          title={this.props.note.title}
+        /> 
       </div>
     );
   }

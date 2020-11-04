@@ -22,6 +22,7 @@ class NoteList extends React.Component {
           note={currentNote}
           deleteNote={this.props.deleteNote}
           saveNote={this.props.saveNote}
+          deleteSearchedNote={this.props.deleteSearchedNote}
         />
       )
     }
@@ -45,6 +46,7 @@ class NoteList extends React.Component {
     return (
       <div>
         <h2>Notes</h2>
+
         <div>
           <label htmlFor="search">Search for note</label>
           <input className="form-control" 
@@ -53,12 +55,12 @@ class NoteList extends React.Component {
               onChange={onNoteFilterChange}
           />
         </div>
+        
         <NoteNew 
           notebookId={this.props.notes.selectedNotebookId} 
           createNote={this.props.createNote}
         />
         
-        {/* {this.props.notes.data.map(createNoteListItem)} */}
         {displayNotes()}
         
       </div>

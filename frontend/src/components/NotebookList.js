@@ -73,6 +73,7 @@ class NotebookList extends React.Component {
             createNote={this.props.createNote}
             deleteNote={this.props.deleteNote}
             saveNote={this.props.saveNote}
+            deleteSearchedNote={this.props.deleteSearchedNote}
           />
         );
       }
