@@ -3,11 +3,11 @@ const api = require('../helpers/api');
 
 // Action type constants
 /* *** TODO: Put action constants here *** */
-const INSERT = 'searchUniversal-frontend/searchUniversal/INSERT';
-const REMOVE_NOTEBOOK = 'searchUniversal-frontend/searchUniversal/REMOVE_NOTEBOOK';
-const REMOVE_NOTE = 'searchUniversal-frontend/searchUniversal/REMOVE_NOTE';
-const SAVE_NOTEBOOK = 'searchUniversal-frontend/searchUniversal/SAVE_NOTEBOOK';
-const SAVE_NOTE = 'searchUniversal-frontend/searchUniversal/SAVE_NOTE';
+const INSERT = 'universalSearch-frontend/universalSearch/INSERT';
+const REMOVE_NOTEBOOK = 'universalSearch-frontend/universalSearch/REMOVE_NOTEBOOK';
+const REMOVE_NOTE = 'universalSearch-frontend/universalSearch/REMOVE_NOTE';
+const SAVE_NOTEBOOK = 'universalSearch-frontend/universalSearch/SAVE_NOTEBOOK';
+const SAVE_NOTE = 'universalSearch-frontend/universalSearch/SAVE_NOTE';
 
 
 const initialState = {
@@ -61,7 +61,7 @@ reducer.insert = (data) => {
 
 reducer.search = (searchedWord) => {
   return (dispatch) => {
-    api.get('/searchUniversal/'+ searchedWord).then((data) => {
+    api.get('/universalSearch/'+ searchedWord).then((data) => {
       dispatch(reducer.insert(data));
     });
   };

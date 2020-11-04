@@ -5,14 +5,12 @@ const Promise = require('sequelize').Promise;
 
 const router = express.Router();
 
-router.get('/:searchedWord', (req, res) => {
+router.get('/:searchWord', (req, res) => {
   const notebooks = models.Notebook.findAll({
     where: {
       $or: [
         {
-          title : {
-            $like: '%' + req.params.searchedWord + '%'
-          }
+          title : { $like: '%' + req.params.searchWord + '%' }
         }
       ]
     }
@@ -22,26 +20,18 @@ router.get('/:searchedWord', (req, res) => {
     where: {
       $or: [
         {
-          title : {
-            $like: '%' + req.params.searchedWord + '%'
-          }
+          title : { $like: '%' + req.params.searchWord + '%' }
         },
         {
-          content: {
-            $like: '%' + req.params.searchedWord + '%'
-          }
+          content: { $like: '%' + req.params.searchWord + '%' }
         }
       ]
     }
   });
 
-  console.log('notes : ' + notes);
-
-  // Promise.all([notebooks, notesTitle, notesContent])
   Promise.all([notebooks, notes])
-  .then(data => {
+    .then(data => {
       let notebooks = data[0];
-      // let notes = _.concat(data[1], data[2]);
       let notes = data[1];
       res.json({notebooks, notes});
     });

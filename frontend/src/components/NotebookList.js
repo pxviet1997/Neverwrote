@@ -5,11 +5,12 @@ const createActionDispatchers = require('../helpers/createActionDispatchers');
 const notebooksActionCreators = require('../reducers/notebooks');
 const notesActionCreators = require('../reducers/notes');
 const statisticsActionCreators = require('../reducers/statistics');
-const searchUniversalActionCreators = require('../reducers/searchUniversal');
+const universalSearchActionCreators = require('../reducers/universalSearch');
 const Notebook = require('./Notebook');
 const Note = require('./Note');
 const NotebookNew = require('./NotebookNew');
 const NoteList = require('./NoteList');
+const UniversalSearch = require('./UniversalSeach');
 const Statistics = require('./Statistics');
 
 const _ = require('lodash');
@@ -25,7 +26,7 @@ class NotebookList extends React.Component {
     super(props);
     props.loadStatistics();
     this.state = { 
-      inputValue: ''
+      searching: false
     };
   }
   render() {
@@ -58,6 +59,12 @@ class NotebookList extends React.Component {
       )
     }
 
+    const isSearching = (value) => {
+      this.setState({
+        searching: value
+      })
+    };
+
     const displayNotes = () => {
       if (this.props.notes.selectedNotebookId !== -1) {
         return (
@@ -71,26 +78,8 @@ class NotebookList extends React.Component {
       }
     };
 
-    const onFilterChange = (event) => {
-      this.setState({
-        inputValue: event.target.value
-      });
-      if (event.target.value !== '') {
-        this.props.search(event.target.value);
-      }
-      
-    };
-
-    const displayResult = () => {
-      const notebooks = this.props.searchUniversal.notebooks.map(createNotebookListItem);
-      const notes = this.props.searchUniversal.notes.map(createNoteListItem);
-      const itemList = notebooks.concat(notes);
-      console.log(itemList);
-      
-      return  this.state.inputValue === '' ? this.props.notebooks.data.map(createNotebookListItem) : 
-                                            itemList;
-                                              // notebooks;
-                                            // return this.props.notebooks.data.map(createNotebookListItem);
+    const displayNotebooks = () => {
+      return this.state.searching === true ? '' : this.props.notebooks.data.map(createNotebookListItem);
     }
     
     return (
@@ -98,18 +87,20 @@ class NotebookList extends React.Component {
         <Statistics />
         <div className="float-child">
           <h2>Notebooks</h2>
-          <div>
-            <label htmlFor="search">Search for notebooks and notes</label>
-            <input className="form-control" 
-                placeholder="Search by title or content..."
-                value={this.state.inputValue}
-                onChange={onFilterChange}
-            />
-            {/* {console.log(this.state.inputValue)} */}
-          </div>
+
+          <UniversalSearch
+            searchedNotebooks={this.props.universalSearch.notebooks}
+            searchedNotes={this.props.universalSearch.notes}
+            createNotebookListItem={createNotebookListItem}
+            createNoteListItem={createNoteListItem}
+            search={this.props.search}
+            isSearching={isSearching}
+            
+          />
+
+          {displayNotebooks()}
+
           <NotebookNew createNotebook={this.props.createNotebook}/>
-          {displayResult()}
-          {/* {this.props.notebooks.data.map(createNotebookListItem)} */}
         </div>
         <div className="float-child">
           {displayNotes()}
@@ -124,9 +115,9 @@ const NotebookListContainer = ReactRedux.connect(
     notebooks: state.notebooks,
     notes: state.notes,
     statistics: state.statistics,
-    searchUniversal: state.searchUniversal
+    universalSearch: state.universalSearch
   }),
-  createActionDispatchers(notebooksActionCreators, notesActionCreators, statisticsActionCreators, searchUniversalActionCreators)
+  createActionDispatchers(notebooksActionCreators, notesActionCreators, statisticsActionCreators, universalSearchActionCreators)
 )(NotebookList);
 
 module.exports = NotebookListContainer;
