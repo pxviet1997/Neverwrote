@@ -2,7 +2,7 @@ const index = require('../controllers/index');
 const notebooks = require('../controllers/notebooks');
 const notes = require('../controllers/notes');
 const stats = require('../controllers/stats');
-const universalSearch = require('../controllers/universalSearch');
+const backendUniversalSearch = require('../controllers/backendUniversalSearch');
 
 const routes = {};
 
@@ -15,7 +15,7 @@ routes.connect = (app) => {
   app.use('/notebooks', notebooks);
   app.use('/notes', notes);
   app.use('/stats', stats);
-  app.use('/universalSearch', universalSearch);
+  app.use('/backendUniversalSearch', backendUniversalSearch);
 };
 
 module.exports = routes;

@@ -5,6 +5,7 @@ const Promise = require('sequelize').Promise;
 
 const router = express.Router();
 
+// GET '/statistic' - Return the summary statistic information
 router.get('/', (req, res) => {
   const notebookCount = models.Notebook.count();
   const noteCount = models.Note.count();

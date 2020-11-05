@@ -8,10 +8,7 @@ const REMOVE = 'notebook-frontend/notebooks/REMOVE';
 const CHANGE = 'notebook-frontend/notebooks/CHANGE';
 
 const initialState = {
-  data: [
-    { id: 100, title: 'From Redux Store: A hard-coded notebook' },
-    { id: 101, title: 'From Redux Store: Another hard-coded notebook' },
-  ]
+  data: []
 };
 
 // Function which takes the current data state and an action,
@@ -51,7 +48,6 @@ reducer.insertNotebooks = (notebooks) => {
 reducer.createNotebook = (newNotebook, callback) => {
   return (dispatch) => {
     api.post('/notebooks', newNotebook).then((notebook) => {
-      // This post is one that the store returns us! It has post id incremented to the next available id
       dispatch(reducer.insertNotebooks([notebook]));
       callback();
     }).catch(() => {
@@ -60,15 +56,11 @@ reducer.createNotebook = (newNotebook, callback) => {
   };
 };
 
-// Removes a post from the visible post list
 reducer.removeNotebook = (id) => {
   return { type: REMOVE, id };
 };
 
-// Attempts to delete a post from the server and removes it from the visible
-// post list if successful
 reducer.deleteNotebook = (notebookId) => {
-   // TODO Section 8: Add code to perform delete
    return (dispatch) => {
     api.delete('/notebooks/' + notebookId).then(() => {
       dispatch(reducer.removeNotebook(notebookId));
@@ -78,12 +70,10 @@ reducer.deleteNotebook = (notebookId) => {
    };
 };
 
-// Attempts to update a post on the server and updates local post data if
-// successful
+
 reducer.saveNotebook = (editedNotebook, callback) => {
   return (dispatch) => {
     api.put('/notebooks/' + editedNotebook.id, editedNotebook).then((notebook) => {
-      // Saves local notebook.
       dispatch(reducer.changeNotebook(notebook));
       callback();
     }).catch(() => {

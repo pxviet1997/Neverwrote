@@ -3,11 +3,11 @@ const api = require('../helpers/api');
 
 // Action type constants
 /* *** TODO: Put action constants here *** */
-const INSERT = 'universalSearch-frontend/universalSearch/INSERT';
-const REMOVE_NOTEBOOK = 'universalSearch-frontend/universalSearch/REMOVE_NOTEBOOK';
-const REMOVE_NOTE = 'universalSearch-frontend/universalSearch/REMOVE_NOTE';
-const SAVE_NOTEBOOK = 'universalSearch-frontend/universalSearch/SAVE_NOTEBOOK';
-const SAVE_NOTE = 'universalSearch-frontend/universalSearch/SAVE_NOTE';
+const INSERT = 'backendUniversalSearch-frontend/backendUniversalSearch/INSERT';
+const REMOVE_NOTEBOOK = 'backendUniversalSearch-frontend/backendUniversalSearch/REMOVE_NOTEBOOK';
+const REMOVE_NOTE = 'backendUniversalSearch-frontend/backendUniversalSearch/REMOVE_NOTE';
+const SAVE_NOTEBOOK = 'backendUniversalSearch-frontend/backendUniversalSearch/SAVE_NOTEBOOK';
+const SAVE_NOTE = 'backendUniversalSearch-frontend/backendUniversalSearch/SAVE_NOTE';
 
 
 const initialState = {
@@ -61,13 +61,12 @@ reducer.insert = (data) => {
 
 reducer.search = (searchedWord) => {
   return (dispatch) => {
-    api.get('/universalSearch/'+ searchedWord).then((data) => {
+    api.get('/backendUniversalSearch/'+ searchedWord).then((data) => {
       dispatch(reducer.insert(data));
     });
   };
 };
 
-// Removes a post from the visible post list
 reducer.deleteSearchedNotebook = (id) => {
   return { type: REMOVE_NOTEBOOK, id };
 };

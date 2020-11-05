@@ -5,6 +5,7 @@ const Promise = require('sequelize').Promise;
 
 const router = express.Router();
 
+// GET '/backendUniversalSearch/:searchWord' - Return the result of the search with the given search word
 router.get('/:searchWord', (req, res) => {
   const notebooks = models.Notebook.findAll({
     where: {

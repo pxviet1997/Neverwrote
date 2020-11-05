@@ -23,7 +23,6 @@ function reducer(state, action) {
   switch(action.type) {
     /* *** TODO: Put per-action code here *** */
     case INSERT_1: {
-      // const unsortedNotes = action.notes;
       const data = _.orderBy(action.notes, 'createdAt','desc');
       const selectedNotebookId = action.notebookId;
       return _.assign({}, state, { data, selectedNotebookId } );
@@ -74,7 +73,6 @@ reducer.getNotes = (notebookId) => {
 };
 
 reducer.createNote = (newNote, callback) => {
-  // console.log('new note : ' + newNote);
   return (dispatch) => {
     api.post('/notes', newNote).then((note) => {
       dispatch(reducer.insertNotes2([note]));
@@ -85,15 +83,11 @@ reducer.createNote = (newNote, callback) => {
   };
 };
 
-// Removes a post from the visible post list
 reducer.removeNote = (id) => {
   return { type: REMOVE, id };
 };
 
-// Attempts to delete a post from the server and removes it from the visible
-// post list if successful
 reducer.deleteNote = (noteId) => {
-   // TODO Section 8: Add code to perform delete
    return (dispatch) => {
     api.delete('/notes/' + noteId).then(() => {
       dispatch(reducer.removeNote(noteId));
@@ -106,7 +100,6 @@ reducer.deleteNote = (noteId) => {
 reducer.saveNote = (editedNote, callback) => {
   return (dispatch) => {
     api.put('/notes/' + editedNote.id, editedNote).then((note) => {
-      // Saves local notebook.
       dispatch(reducer.changeNote(note));
       callback();
     }).catch(() => {
