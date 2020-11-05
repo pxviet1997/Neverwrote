@@ -19,7 +19,6 @@ class NotebookEdit extends React.Component {
 
     const submitAndStopEditing = (event) => {
       event.preventDefault();
-      // Creates a new post object and saves it.
       const editedNotebook = _.assign({}, this.props.notebook, {
         title: this.state.title
       });
@@ -33,17 +32,14 @@ class NotebookEdit extends React.Component {
 
     return (
       <div>
-        {/* Title field */}
         <div className="notebook-group">
           <input className="form-control" value={this.state.title}
             placeholder="Notebook title..." onChange={onTitleChange}
           />
-          {/* <span className="input-group-button"> */}
-          <button className="btn btn-success" onClick={submitAndStopEditing}>
+          <button type="button" class="btn btn-success" onClick={submitAndStopEditing}>
             <i className="fa fa-check"/>
           </button>
-          <button className="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
-        {/* </span> */}
+          <button type="button" class="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
         </div>
       </div>
     );

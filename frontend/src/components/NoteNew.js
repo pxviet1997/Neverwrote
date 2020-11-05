@@ -1,7 +1,5 @@
 const React = require('react');
-// const PostEdit = require('./PostEdit');
-// const NoteEdit = require('./NoteEdit');
-const MarkdownEditor = require('./MarkdownEditor');
+
 const NoteEdit = require('./NoteEdit');
 
 /**
@@ -39,8 +37,6 @@ class NoteNew extends React.Component {
           onSave={createNote}
           onCancel={closeEdit}
         />
-        // <MarkdownEditor
-        // />
       );
     }
 

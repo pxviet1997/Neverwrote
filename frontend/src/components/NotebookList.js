@@ -5,12 +5,12 @@ const createActionDispatchers = require('../helpers/createActionDispatchers');
 const notebooksActionCreators = require('../reducers/notebooks');
 const notesActionCreators = require('../reducers/notes');
 const statisticsActionCreators = require('../reducers/statistics');
-const universalSearchActionCreators = require('../reducers/universalSearch');
+const backendUniversalSearchActionCreators = require('../reducers/backendUniversalSearch');
 const Notebook = require('./Notebook');
 const Note = require('./Note');
 const NotebookNew = require('./NotebookNew');
 const NoteList = require('./NoteList');
-const UniversalSearch = require('./UniversalSeach');
+const BackendUniversalSearch = require('./BackendUniversalSearch');
 const Statistics = require('./Statistics');
 
 const _ = require('lodash');
@@ -24,12 +24,15 @@ const _ = require('lodash');
 class NotebookList extends React.Component {
   constructor(props) {
     super(props);
-    props.loadStatistics();
+
+    props.loadStatistics(); // Load the Summary Statistic
+
     this.state = { 
       searching: false
     };
   }
   render() {
+    // Create the Notebook List
     const createNotebookListItem = (currentNotebook) => {
       return (
         <Notebook
@@ -45,6 +48,7 @@ class NotebookList extends React.Component {
       )
     }
 
+    // Create the Note List for searched Note
     const createNoteListItem = (currentNote) => {
       return (
         <Note
@@ -54,17 +58,18 @@ class NotebookList extends React.Component {
           deleteSearchedNote={this.props.deleteSearchedNote}
           saveNote={this.props.saveNote}
           saveSearchedNote={this.props.saveSearchedNote}
-
         />
       )
     }
 
+    // Toggle  Searching state
     const isSearching = (value) => {
       this.setState({
         searching: value
       })
     };
 
+    // Display the Note list
     const displayNotes = () => {
       if (this.props.notes.selectedNotebookId !== -1) {
         return (
@@ -79,6 +84,7 @@ class NotebookList extends React.Component {
       }
     };
 
+    // Display the Notebook list
     const displayNotebooks = () => {
       return this.state.searching === true ? '' : this.props.notebooks.data.map(createNotebookListItem);
     }
@@ -95,21 +101,25 @@ class NotebookList extends React.Component {
         <div className="float-child">
           <h2>Notebooks</h2>
 
-          <UniversalSearch
-            searchedNotebooks={this.props.universalSearch.notebooks}
-            searchedNotes={this.props.universalSearch.notes}
+          {/* Universal search across all notebooks and notes (in backend) */}
+          <BackendUniversalSearch
+            searchedNotebooks={this.props.backendUniversalSearch.notebooks}
+            searchedNotes={this.props.backendUniversalSearch.notes}
             createNotebookListItem={createNotebookListItem}
             createNoteListItem={createNoteListItem}
             search={this.props.search}
             isSearching={isSearching}
-            
           />
 
+          {/* Display the notebook list */}
           {displayNotebooks()}
 
+          {/* Create a new notebook */}
           <NotebookNew createNotebook={this.props.createNotebook}/>
         </div>
+
         <div className="float-child">
+          {/* Display the note list of a particular notebook */}
           {displayNotes()}
         </div>
       </div>
@@ -122,9 +132,9 @@ const NotebookListContainer = ReactRedux.connect(
     notebooks: state.notebooks,
     notes: state.notes,
     statistics: state.statistics,
-    universalSearch: state.universalSearch
+    backendUniversalSearch: state.backendUniversalSearch
   }),
-  createActionDispatchers(notebooksActionCreators, notesActionCreators, statisticsActionCreators, universalSearchActionCreators)
+  createActionDispatchers(notebooksActionCreators, notesActionCreators, statisticsActionCreators, backendUniversalSearchActionCreators)
 )(NotebookList);
 
 module.exports = NotebookListContainer;

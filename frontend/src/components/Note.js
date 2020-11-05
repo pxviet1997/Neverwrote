@@ -30,7 +30,6 @@ class Note extends React.Component {
     };
 
     if(this.state.editing) {
-      // Render component for editing the post
       return (
         <NoteEdit
           notebookId={this.props.note.notebookId}
@@ -38,7 +37,6 @@ class Note extends React.Component {
           onSave={saveEdit}
           onCancel={closeEdit}
         />
-        // <MarkdownEditor />
       );
     }
 
@@ -69,5 +67,4 @@ class Note extends React.Component {
   }
 }
 
-// Export the Notebook component
 module.exports = Note;

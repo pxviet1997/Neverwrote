@@ -56,5 +56,4 @@ class Notebook extends React.Component {
   }
 }
 
-// Export the Notebook component
 module.exports = Notebook;

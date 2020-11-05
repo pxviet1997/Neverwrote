@@ -2,6 +2,7 @@ const React = require('react');
 
 const NoteNew = require('./NoteNew');
 const Note = require('./Note');
+const FrontendSearch = require('./FrontendSearch');
 
 /*
   *** TODO: Build more functionality into the NotebookList component ***
@@ -12,11 +13,12 @@ const Note = require('./Note');
 class NoteList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { inputValue: '' };
+    this.state = { searching: false };
   }
   render() {
     const createNoteListItem = (currentNote) => {
       return (
+        // Create a Note component
         <Note
           key={currentNote.id}
           note={currentNote}
@@ -27,41 +29,36 @@ class NoteList extends React.Component {
       )
     }
 
-    const onNoteFilterChange = (event) => {
+    const isSearching = (value) => {
       this.setState({
-        inputValue: event.target.value
-      });
-    };
+        searching: value
+      })
+    }
 
-    const filterNotes = this.props.notes.data.filter(note => {
-      return note.title.toLowerCase().includes(this.state.inputValue.toLowerCase())
-          || note.content.toLowerCase().includes(this.state.inputValue.toLowerCase());
-    });
-
+    // Display note list
     const displayNotes = () => {
-      return this.state.inputValue === '' ? this.props.notes.data.map(createNoteListItem) : 
-                                            filterNotes.map(createNoteListItem);
+      return this.state.searching === true ? '' : this.props.notes.data.map(createNoteListItem);
     }
     
     return (
       <div>
         <h2>Notes</h2>
 
-        <div>
-          <label htmlFor="search">Search for note</label>
-          <input className="form-control" 
-              placeholder="Search by title or content..."
-              value={this.state.inputValue}
-              onChange={onNoteFilterChange}
-          />
-        </div>
+        {/* Frontend search for notes within a selected notebook */}
+        <FrontendSearch 
+          notes={this.props.notes.data}
+          createNoteListItem={createNoteListItem}
+          isSearching={isSearching}
+        />
         
+        {/* Display the note list */}
+        {displayNotes()}
+
+        {/* Create a new note */}
         <NoteNew 
           notebookId={this.props.notes.selectedNotebookId} 
           createNote={this.props.createNote}
         />
-        
-        {displayNotes()}
         
       </div>
     );

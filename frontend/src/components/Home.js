@@ -16,9 +16,12 @@ const NotebookList = require('./NotebookList');
 const Home = () => (
   <div className="container">
     <h1>Neverwrote</h1>
+
     <blockquote>
+      <h3>VIET PHAM XUAN - 19260293</h3>
       Really don't understand why it is named Neverwrote. Oh well.
     </blockquote>
+    
     <NotebookList />
   </div>
 );

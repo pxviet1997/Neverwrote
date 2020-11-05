@@ -26,6 +26,7 @@ const NotebookView = (props) => {
         deleteThisNotebook={props.deleteThisNotebook}
         openEdit={props.openEdit}
       />
+      
       <a role="button" onClick={props.notebookClicked}>
         {props.title}
       </a>

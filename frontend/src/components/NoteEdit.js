@@ -49,18 +49,19 @@ class NoteEdit extends React.Component {
           <input className="form-control" value={this.state.title}
             placeholder="Note title..." onChange={onTitleChange}
           />
-          {/* <input className="form-control" value={this.state.content}
-            placeholder="Note content..." onChange={onContentChange}
-          /> */}
           
           <MarkdownEditor 
             value={ this.state.content }
             onChange={onContentChange}
           />
+
           <button type="button" className="btn btn-success" onClick={submitAndStopEditing}>
             <i className="fa fa-check"/>
           </button>
-          <button type="button" className="btn btn-default" onClick={revertAndStopEditing}>Cancel</button>
+
+          <button type="button" className="btn btn-default" onClick={revertAndStopEditing}>
+            Cancel
+          </button>
         </div>
       </div>
     );

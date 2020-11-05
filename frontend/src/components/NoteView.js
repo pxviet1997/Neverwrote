@@ -26,9 +26,11 @@ const NoteView = (props) => {
         deleteThisNote={props.deleteThisNote}
         openEdit={props.openEdit}
       />
+
       <a role="button" onClick={props.toggleDisplayContent}>
         {props.title}
       </a>
+      
       {props.displayContent()}
     </div>
   );

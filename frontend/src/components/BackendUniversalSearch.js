@@ -1,6 +1,6 @@
 const React = require('react');
 
-class UniversalSearch extends React.Component {
+class BackendUniversalSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -46,4 +46,4 @@ class UniversalSearch extends React.Component {
 
 }
 
-module.exports = UniversalSearch;
+module.exports = BackendUniversalSearch;
